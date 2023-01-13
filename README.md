@@ -31,7 +31,9 @@ Makro Tanımlarının yapılması gerekiyor burada Host için gerekli tanımlama
 
 
 {$USERNAME}	root
+
 {$PASSWORD}	rootpassword
+
 {$URL}          https://ESX-IP-ADDRESS-OR-NAME/sdk
 
 Bütün adımlar tamamlandığında otomatik olarak vcenter üzerinde bulunan VM ve Datastore keşiflerini yapacaktır.
