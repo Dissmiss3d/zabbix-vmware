@@ -45,6 +45,7 @@ Datastore item olarak oluşmaktadır.
 Yakın zamanda yapılacak güncellemeler;
 
 1-oluşturulan vm'lere otomatik windows-linux template eklemek,katman olarak ayırmak,servis izlemelerini başlatmak.
+
 2-datastore free space trigger.
 
 
