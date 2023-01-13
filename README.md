@@ -42,8 +42,8 @@ Makro Tanımlarının yapılması gerekiyor burada Host için gerekli tanımlama
 
 Bütün adımlar tamamlandığında otomatik olarak vcenter üzerinde bulunan VM ve Datastore keşiflerini yapacaktır.
 
-VM'leri ve Hypervisorleri otomatik host olarak eklemektedir.
-Datastore item olarak oluşmaktadır. 
+(VM'leri ve Hypervisorleri otomatik host olarak eklemektedir.
+Datastore item olarak oluşmaktadır)
 
 
 Yakın zamanda yapılacak güncellemeler;
