@@ -19,9 +19,13 @@ Navigate: Configuration -> Hosts -> Create host
 ![image](https://user-images.githubusercontent.com/85514498/212404126-94135dad-3fc5-4fd6-8cd2-99409e97df2e.png)
 
 Aşağıdaki bilgileri giriyoruz;
+
 Hostname  :Bir isim giriniz
+
 Groups    :Hypervisors
+
 Agent interface : Vmhost ip addres
+
 Template : Vmware,VMware Guest,VMware Hypervisor
 
 
