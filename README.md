@@ -51,4 +51,4 @@ Yakın zamanda yapılacak güncellemeler;
 
 Oluşturulan vm'lere otomatik windows-linux template eklemek,katman olarak ayırmak,servis izlemelerini başlatmak.
 
-
+#Grafana kullanılan yapılarda telegraf'a ihtiyaç duymadan Zabbix üzerindeki VMWare-ESX metriklerini görselleştirme avantajı doğacak.
