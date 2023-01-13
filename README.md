@@ -2,6 +2,7 @@
 VMWare ESX-VM izleme
 
 Hedef: Sanallaştırma ortamında bulunan sunucuları OS katmanında otomatik izlemeye almak. Hypervisor sorgularını daha kapsamlı yapmak ve takip etmek.
+
 Aşağıdaki komut ile zabbix_server.conf dosyamızı düzenleme modunda açıyoruz.
 
 nano /etc/zabbix/zabbix_server.conf
