@@ -1,7 +1,7 @@
 # zabbix-vmware
 VMWare ESX-VM izleme
 
-Hedef: Sanallaştırma ortamında bulunan sunucuları OS katmanında otomatik izlemeye almak. Hypervisor sorgularını daha kapsamlı yapmak ve takip etmek.
+Hedef: Sanallaştırma ortamında bulunan sunucuları OS katmanında otomatik izlemeye almak. Hypervisor sorgularını daha kapsamlı yapmak ve takip etmek. Datastore doluluğunu takip etmek.
 
 Aşağıdaki komut ile zabbix_server.conf dosyamızı düzenleme modunda açıyoruz.
 
@@ -49,9 +49,6 @@ Datastore item olarak oluşmaktadır)
 
 Yakın zamanda yapılacak güncellemeler;
 
-1-oluşturulan vm'lere otomatik windows-linux template eklemek,katman olarak ayırmak,servis izlemelerini başlatmak.
-
-2-datastore free space trigger.
-
+Oluşturulan vm'lere otomatik windows-linux template eklemek,katman olarak ayırmak,servis izlemelerini başlatmak.
 
 
