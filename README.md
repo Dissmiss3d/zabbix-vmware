@@ -14,8 +14,8 @@ Düzenlemeleri yaptıktan sonra "zabbix-server" servisini restart etmeliyiz.
 
 yaml formatında olan templateleri import ettikten sonra hostumuzu oluşturuyoruz;
 
-1-   (http://YOUR-SERVER/zabbix)
-2-  Navigate: Configuration -> Hosts -> Create host
+(http://YOUR-SERVER/zabbix)
+Navigate: Configuration -> Hosts -> Create host
 ![image](https://user-images.githubusercontent.com/85514498/212404126-94135dad-3fc5-4fd6-8cd2-99409e97df2e.png)
 
 Aşağıdaki bilgileri giriyoruz;
