@@ -1,6 +1,6 @@
 zabbix_export:
   version: '6.2'
-  date: '2023-01-12T12:38:34Z'
+  date: '2023-02-07T17:50:11Z'
   template_groups:
     -
       uuid: a571c0d144b14fd4a87a9d9b2aa9fcd6
@@ -694,7 +694,6 @@ zabbix_export:
           name: 'Mounted filesystem discovery'
           type: SIMPLE
           key: 'vmware.vm.vfs.fs.discovery[{$VMWARE.URL},{$VMWARE.VM.UUID}]'
-          delay: 1h
           username: '{$VMWARE.USERNAME}'
           password: '{$VMWARE.PASSWORD}'
           description: 'Discovery of all guest file systems.'
@@ -734,6 +733,19 @@ zabbix_export:
                 -
                   tag: filesystem
                   value: '{#FSNAME}'
+              trigger_prototypes:
+                -
+                  uuid: e25c8644ed4c432c938665d1a5433215
+                  expression: 'last(/VMware Guest/vmware.vm.vfs.fs.size[{$VMWARE.URL},{$VMWARE.VM.UUID},{#FSNAME},pfree])<10'
+                  name: 'Free disk space is less than %10 Disk: {#FSNAME} {ITEM.LASTVALUE}'
+                  priority: AVERAGE
+                  manual_close: 'YES'
+                -
+                  uuid: 4d2a7bb4912a43018085dbfcc44eaa7c
+                  expression: 'last(/VMware Guest/vmware.vm.vfs.fs.size[{$VMWARE.URL},{$VMWARE.VM.UUID},{#FSNAME},pfree])<20'
+                  name: 'Free disk space is less than %20 Disk: {#FSNAME}  {ITEM.LASTVALUE}'
+                  priority: HIGH
+                  manual_close: 'YES'
             -
               uuid: 08d05eac03994b56867ec302a346735c
               name: 'VMware: Total disk space on {#FSNAME}'
