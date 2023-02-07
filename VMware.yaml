@@ -1,6 +1,6 @@
 zabbix_export:
   version: '6.2'
-  date: '2023-01-13T19:56:34Z'
+  date: '2023-02-07T17:45:56Z'
   template_groups:
     -
       uuid: a571c0d144b14fd4a87a9d9b2aa9fcd6
@@ -108,6 +108,22 @@ zabbix_export:
                 -
                   tag: component
                   value: cluster
+              trigger_prototypes:
+                -
+                  uuid: 9a66756f5b2d4beb890ea94a5b48dc21
+                  expression: 'last(/VMware/vmware.cluster.status[{$VMWARE.URL},{#CLUSTER.NAME}])=0'
+                  name: 'VMware: Status of "{#CLUSTER.NAME}" is Gray'
+                  priority: WARNING
+                -
+                  uuid: 4d96006a34d94d4985518e5b298d5b7b
+                  expression: 'last(/VMware/vmware.cluster.status[{$VMWARE.URL},{#CLUSTER.NAME}])=3'
+                  name: 'VMware: Status of "{#CLUSTER.NAME}" is Red'
+                  priority: HIGH
+                -
+                  uuid: 3327f9ce5f7d4b83826330dac6a1a688
+                  expression: 'last(/VMware/vmware.cluster.status[{$VMWARE.URL},{#CLUSTER.NAME}])=2'
+                  name: 'VMware: Status of "{#CLUSTER.NAME}" is Yellow'
+                  priority: AVERAGE
         -
           uuid: 8fb6a45cbe074b0cb6df53758e2c6623
           name: 'Discover VMware datastores'
@@ -118,6 +134,25 @@ zabbix_export:
           password: '{$VMWARE.PASSWORD}'
           item_prototypes:
             -
+              uuid: 407c177db33b4f73a45d142d8679fbbe
+              name: 'VMware: Time until datastore {#DATASTORE} is %100 full'
+              type: CALCULATED
+              key: 'vmware.datastore.predictionl[{#DATASTORE}]'
+              delay: 15m
+              units: s
+              params: |
+                count(//vmware.datastore.size[{$VMWARE.URL},{#DATASTORE},free],#1,"gt","1048576") * (
+                (timeleft(//vmware.datastore.size[{$VMWARE.URL},{#DATASTORE},free],8h,0) < 1095d) * timeleft(//vmware.datastore.size[{$VMWARE.URL},{#DATASTORE},free],8h,0) + (timeleft(//vmware.datastore.size[{$VMWARE.URL},{#DATASTORE},free],8h,0) >= 1095d)
+                *
+                ((timeleft(//vmware.datastore.size[{$VMWARE.URL},{#DATASTORE},free],4h,0) < 1095d) * timeleft(//vmware.datastore.size[{$VMWARE.URL},{#DATASTORE},free],4h,0) + (timeleft(//vmware.datastore.size[{$VMWARE.URL},{#DATASTORE},free],4h,0) >= 1095d)
+                *
+                ((timeleft(//vmware.datastore.size[{$VMWARE.URL},{#DATASTORE},free],1h,0) < 1095d) * timeleft(//vmware.datastore.size[{$VMWARE.URL},{#DATASTORE},free],1h,0) + (timeleft(//vmware.datastore.size[{$VMWARE.URL},{#DATASTORE},free],1h,0) >= 1095d)
+                *
+                ((timeleft(//vmware.datastore.size[{$VMWARE.URL},{#DATASTORE},free],15m,0) < 1095d) * timeleft(//vmware.datastore.size[{$VMWARE.URL},{#DATASTORE},free],15m,0) + (timeleft(//vmware.datastore.size[{$VMWARE.URL},{#DATASTORE},free],15m,0) >= 1095d)
+                *
+                1095d
+                ))))
+            -
               uuid: 4b61838ba4c34e709b25081ae5b059b5
               name: 'VMware: Average read latency of the datastore {#DATASTORE}'
               type: SIMPLE
@@ -126,6 +161,25 @@ zabbix_export:
               username: '{$VMWARE.USERNAME}'
               password: '{$VMWARE.PASSWORD}'
               description: 'Amount of time for a read operation from the datastore (milliseconds).'
+              tags:
+                -
+                  tag: component
+                  value: datastore
+                -
+                  tag: datastore
+                  value: '{#DATASTORE}'
+            -
+              uuid: 2e237457b35f4c91b69ee7e025bfcdbd
+              name: 'VMware: Free space on datastore {#DATASTORE}'
+              type: SIMPLE
+              key: 'vmware.datastore.size[{$VMWARE.URL},{#DATASTORE},free]'
+              delay: 5m
+              history: 7d
+              value_type: FLOAT
+              units: B
+              username: '{$VMWARE.USERNAME}'
+              password: '{$VMWARE.PASSWORD}'
+              description: 'VMware datastore space in percentage from total.'
               tags:
                 -
                   tag: component
@@ -157,15 +211,11 @@ zabbix_export:
                   uuid: 6bf9123f04c44b20a85a9dbdeb94bf90
                   expression: 'last(/VMware/vmware.datastore.size[{$VMWARE.URL},{#DATASTORE},pfree])<5'
                   name: 'VMware: Free space is critically low datastore {#DATASTORE} {ITEM.LASTVALUE}'
-                  status: DISABLED
-                  discover: NO_DISCOVER
                   priority: HIGH
                 -
                   uuid: e01424f1e69147a389e3ccc8d1e79ff3
                   expression: 'last(/VMware/vmware.datastore.size[{$VMWARE.URL},{#DATASTORE},pfree])<10'
                   name: 'VMware: Free space is low datastore {#DATASTORE} {ITEM.LASTVALUE}'
-                  status: DISABLED
-                  discover: NO_DISCOVER
                   priority: HIGH
             -
               uuid: 84f13c4fde2d4a17baaf0c8c1eb4f2c0
@@ -201,6 +251,13 @@ zabbix_export:
                 -
                   tag: datastore
                   value: '{#DATASTORE}'
+          trigger_prototypes:
+            -
+              uuid: d8c92754740c49c78b0b7b2dbf3d3126
+              expression: 'max(/VMware/vmware.datastore.size[{$VMWARE.URL},{#DATASTORE},pfree],15m)<{$VMWARE_DATASTORE_UTILIZATION:"{#DATASTORE}"} and last(/VMware/vmware.datastore.size[{$VMWARE.URL},{#DATASTORE},free])<>-1 and last(/VMware/vmware.datastore.size[{$VMWARE.URL},{#DATASTORE}])<>-1 and last(/VMware/vmware.datastore.predictionl[{#DATASTORE}])<>-1'
+              name: 'Free space is less than {ITEM.LASTVALUE1} on datastore "{#DATASTORE}", there is {ITEM.LASTVALUE2} left of {ITEM.LASTVALUE3} and for {ITEM.LASTVALUE4} will be %100 full'
+              priority: HIGH
+              manual_close: 'YES'
         -
           uuid: a5bc075e89f248e7b411d8f960897a08
           name: 'Discover VMware hypervisors'
@@ -290,6 +347,9 @@ zabbix_export:
         -
           macro: '{$VMWARE.USERNAME}'
           description: 'VMware service user name'
+        -
+          macro: '{$VMWARE_DATASTORE_UTILIZATION}'
+          value: '5'
       valuemaps:
         -
           uuid: 3c59c22905054d42ac4ee8b72fe5f270
