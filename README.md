@@ -1,6 +1,25 @@
 # zabbix-vmware
 VMWare ESX-VM izleme
+##Güncelleme;
 
+datastore ve os katmanında free space triggerları eklendi
+
+-os katmanında %10Average-%20High free space
+
+![image](https://user-images.githubusercontent.com/85514498/217327146-ed955158-43fd-4fc7-8767-12323237bd46.png)
+
+
+-datastore için %5-%10 
+
+-ek olarak [totalspace][remainingspace][%100dolacağısüre]
+
+![image](https://user-images.githubusercontent.com/85514498/217327339-5c4c021d-eae9-4f7a-b9e0-a4b0c7d8f8f4.png)
+
+
+vmware cluster status [yellow-red]
+
+
+hypervisor için memory-cpu-cpu ready yakında eklenecek.
 Hedef: Sanallaştırma ortamında bulunan sunucuları OS katmanında otomatik izlemeye almak. Hypervisor sorgularını daha kapsamlı yapmak ve takip etmek. Datastore doluluğunu takip etmek.
 
 Aşağıdaki komut ile zabbix_server.conf dosyamızı düzenleme modunda açıyoruz.
