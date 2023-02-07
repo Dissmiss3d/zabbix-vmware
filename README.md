@@ -14,6 +14,9 @@ datastore ve os katmanında free space triggerları eklendi
 
 -ek olarak [totalspace][remainingspace][%100dolacağısüre]
 
+![image](https://user-images.githubusercontent.com/85514498/217328354-c774ed9f-197e-4d9c-815a-c965b9e3f804.png)
+
+
 ![image](https://user-images.githubusercontent.com/85514498/217327339-5c4c021d-eae9-4f7a-b9e0-a4b0c7d8f8f4.png)
 
 
