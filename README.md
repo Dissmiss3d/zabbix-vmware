@@ -1,5 +1,6 @@
 # zabbix-vmware
 VMWare ESX-VM izleme
+
 ##Güncelleme;
 
 datastore ve os katmanında free space triggerları eklendi
